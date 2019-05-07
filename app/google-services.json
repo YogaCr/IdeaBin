@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "924943570844",
+    "firebase_url": "https://ideabin-5355f.firebaseio.com",
+    "project_id": "ideabin-5355f",
+    "storage_bucket": "ideabin-5355f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924943570844:android:4936359228db4148",
+        "android_client_info": {
+          "package_name": "com.yogacahya.ideabin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924943570844-4qkthenc7nof8bqejffr8b7bkl7sum7v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgDHC85Fpn7W7RhvbG4dSIZZu9xnTepo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924943570844-4qkthenc7nof8bqejffr8b7bkl7sum7v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
