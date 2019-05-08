@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class YourideaFragment : Fragment() {
@@ -53,13 +53,13 @@ class YourideaFragment : Fragment() {
                             rvIdea.adapter?.notifyDataSetChanged()
                         }
                     }.addOnFailureListener {
-                        Toast.makeText(context!!, it.message, Toast.LENGTH_SHORT).show()
+                        Toasty.error(context!!, it.message!!).show()
                     }
                 }
                 swipe_rv.isRefreshing = false
             }
         }.addOnFailureListener {
-            Toast.makeText(context!!, it.message, Toast.LENGTH_SHORT).show()
+            Toasty.error(context!!, it.message!!).show()
             swipe_rv.isRefreshing = false
         }
     }
