@@ -77,6 +77,8 @@ class MainActivity : AppCompatActivity() {
                         if (alreadyInit) {
                             btnNotif.visibility = View.VISIBLE
                         }
+                    } else if (dc.type == DocumentChange.Type.MODIFIED) {
+
                     }
                 }
                 alreadyInit = true

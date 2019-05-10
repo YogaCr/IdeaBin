@@ -1,6 +1,7 @@
 package com.yogacahya.ideabin
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,7 @@ class IdeaAdapter(private val c: Context, private val ls: MutableList<IdeaModel>
     RecyclerView.Adapter<IdeaAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(c).inflate(R.layout.rv_home, parent, false))
+        ViewHolder(LayoutInflater.from(c).inflate(R.layout.rv_home, parent, false), c)
 
     override fun getItemCount(): Int = ls.size
 
@@ -20,7 +21,7 @@ class IdeaAdapter(private val c: Context, private val ls: MutableList<IdeaModel>
         holder.bind(ls[position], position)
     }
 
-    class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
+    class ViewHolder(private val v: View, private val c: Context) : RecyclerView.ViewHolder(v) {
 
         private val warna: MutableList<Int> = mutableListOf()
 
@@ -40,6 +41,12 @@ class IdeaAdapter(private val c: Context, private val ls: MutableList<IdeaModel>
                 v.cv_idea.setCardBackgroundColor(warna[1])
             } else {
                 v.cv_idea.setCardBackgroundColor(warna[2])
+            }
+
+            v.cv_idea.setOnClickListener {
+                val intent = Intent(c, DetailActivity::class.java)
+                intent.putExtra("id", m.id)
+                c.startActivity(intent)
             }
         }
     }

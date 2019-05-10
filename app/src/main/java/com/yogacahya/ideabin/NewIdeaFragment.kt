@@ -24,6 +24,8 @@ class NewIdeaFragment : BottomSheetDialogFragment() {
         super.setupDialog(dialog, style)
         val v = View.inflate(context!!, R.layout.layout_new_idea, null)
         v.btnSave.setOnClickListener {
+            v.btnSave.visibility = View.GONE
+            v.rotateloading.visibility = View.VISIBLE
             val map = HashMap<String, String>()
             map["name"] = v.etIdeaTitle.text.toString()
             map["description"] = v.etIdeaDesc.text.toString()
@@ -35,6 +37,8 @@ class NewIdeaFragment : BottomSheetDialogFragment() {
                 }
                 .addOnFailureListener {
                     Toasty.error(context!!, it.message!!).show()
+                    v.btnSave.visibility = View.VISIBLE
+                    v.rotateloading.visibility = View.GONE
                 }
         }
         dialog.setContentView(v)

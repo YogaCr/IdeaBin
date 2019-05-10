@@ -50,5 +50,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+    implementation 'com.github.zjywill:OverwatchProgress:1.5'
 }
 apply plugin: 'com.google.gms.google-services'

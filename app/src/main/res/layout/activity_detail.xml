@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DetailActivity"
+        android:orientation="vertical"
+        android:background="#fff">
+    <com.google.android.material.appbar.AppBarLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/appBarLayout">
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                app:title="Idea Detail">
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+    >
+        <com.comix.overwatch.HiveProgressView
+                android:id="@+id/loading"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                app:hive_color="#3D3D3D"
+                app:hive_animDuration="5000"
+                app:hive_maxAlpha="255"
+        />
+        <ScrollView
+                android:id="@+id/ly_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+        >
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                          android:layout_margin="16dp">
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Title"
+                          android:textSize="32sp"
+                          android:textColor="#000"
+                          android:textStyle="bold"
+                          android:id="@+id/tv_judul"/>
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="1dp"
+                          android:layout_marginTop="16dp"
+                          android:background="#000"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="desc"
+                          android:textSize="16sp"
+                          android:textColor="#000"
+                          android:layout_margin="16dp"
+                          android:id="@+id/tv_desc"
+                />
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="1dp"
+                          android:background="#000"/>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:iconTint="#8F000000"
+                            app:backgroundTint="#fff"
+                            android:text="0"
+                            android:textColor="#000"
+                            app:icon="@drawable/ic_thumb_up"
+                            android:id="@+id/btn_like"/>
+                    <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:backgroundTint="#FB8C00"
+                            android:text="Bookmark"
+                            android:layout_marginHorizontal="16dp"
+                            app:icon="@drawable/ic_star_border_black_24dp"
+                            android:id="@+id/btn_bookmark"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>
