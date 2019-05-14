@@ -4,14 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -24,7 +20,9 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
         auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
-            checkUser(auth.currentUser!!)
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -47,59 +45,14 @@ class LoginActivity : AppCompatActivity() {
                 val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
                 auth.signInWithCredential(credential).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        checkUser(account!!)
+                        Auth.GoogleSignInApi.signOut(client)
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
 
                 }
             }
-        }
-    }
-
-    fun checkUser(account: FirebaseUser) {
-        val firestore = FirebaseFirestore.getInstance()
-        firestore.collection("users").document(account.uid).get().addOnSuccessListener {
-            if (it.exists()) {
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                val data = HashMap<String, String>()
-                data.put("name", account.displayName!!)
-                data.put("image", account.photoUrl!!.toString())
-                firestore.collection("users").document(account.uid).set(data).addOnSuccessListener {
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }.addOnFailureListener {
-                    Toasty.error(this, "Login Failure").show()
-                }
-            }
-        }.addOnFailureListener {
-            Toasty.error(this, "Login Failure").show()
-        }
-    }
-
-    fun checkUser(account: GoogleSignInAccount) {
-        val firestore = FirebaseFirestore.getInstance()
-        firestore.collection("users").document(account.id!!).get().addOnSuccessListener {
-            if (it.exists()) {
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                val data = HashMap<String, String>()
-                data.put("name", account.displayName!!)
-                data.put("image", account.photoUrl!!.toString())
-                firestore.collection("users").document(account.id!!).set(data).addOnSuccessListener {
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }.addOnFailureListener {
-                    Toasty.error(this, "Login Failure").show()
-                }
-            }
-        }.addOnFailureListener {
-            Toasty.error(this, "Login Failure").show()
         }
     }
 }

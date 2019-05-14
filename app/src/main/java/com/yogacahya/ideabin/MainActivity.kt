@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,8 +29,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
+        et_search.clearFocus()
         initComponent()
+
     }
 
     private fun initComponent() {
@@ -53,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             v.tv_nama.text = auth.currentUser?.displayName
             v.btnLogout.setOnClickListener {
                 auth.signOut()
+
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -62,6 +66,29 @@ class MainActivity : AppCompatActivity() {
             alert.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             alert.show()
         }
+
+        et_search.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                if (bottom_nav.selectedItemId != R.id.homeFragment) {
+                    bottom_nav.selectedItemId = R.id.homeFragment
+                }
+            }
+        }
+        et_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (bottom_nav.selectedItemId != R.id.homeFragment) {
+                    bottom_nav.selectedItemId = R.id.homeFragment
+                }
+            }
+        })
         firestore = FirebaseFirestore.getInstance()
     }
 
@@ -77,8 +104,6 @@ class MainActivity : AppCompatActivity() {
                         if (alreadyInit) {
                             btnNotif.visibility = View.VISIBLE
                         }
-                    } else if (dc.type == DocumentChange.Type.MODIFIED) {
-
                     }
                 }
                 alreadyInit = true

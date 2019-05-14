@@ -43,17 +43,23 @@ class BookmarkFragment : Fragment() {
 
     private fun getData() {
         swipe_rv.isRefreshing = true
-        firestore.collection("idea").whereEqualTo("author", user.uid).get().addOnSuccessListener {
+        firestore.collection("idea").get().addOnSuccessListener {
             ls.clear()
             if (rvIdea != null) {
                 rvIdea.adapter?.notifyDataSetChanged()
                 for (d in it) {
                     val id = d.id
                     val judul = d.data["name"].toString()
-                    firestore.collection("idea").document(id).collection("bookmark").get().addOnSuccessListener { res ->
-                        ls.add(IdeaModel(id, judul, res.size()))
-                        if (rvIdea != null) {
-                            rvIdea.adapter?.notifyDataSetChanged()
+                    firestore.collection("idea").document(id).collection("bookmark").document(user.uid).get()
+                        .addOnSuccessListener { res ->
+                            if (res.exists()) {
+                                firestore.collection("idea").document(id).collection("like").get()
+                                    .addOnSuccessListener { snap ->
+                                        ls.add(IdeaModel(id, judul, snap.size()))
+                                        if (rvIdea != null) {
+                                            rvIdea.adapter?.notifyDataSetChanged()
+                                        }
+                                    }
                         }
                     }.addOnFailureListener {
                         Toasty.error(context!!, it.message!!).show()
